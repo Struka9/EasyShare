@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Easy Share</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="send">Send</string>
+    <string name="receive">Receive</string>
+
+    <string name="waiting">Waiting for incoming connections...</string>
+    <string name="client_connected">Accepted Connection</string>
+    <string name="transfer_in_progress">Transfering file...</string>
+    <string name="make_sure_same_network">Make sure both the receiver and sender are on the same network.</string>
+    <string name="read">Read Code</string>
+    <string name="error_taking_pic">Error taking the picture, please try again</string>
+    <string name="could_not_setup_detector">Couldn\'t setup the detector, please try again</string>
+    <string name="scan_this">Scan this barcode with Easy Share to transfer the file</string>
+    <string name="file_transfer_complete">The file has been copied to the other device</string>
+    <string name="trasnfering_files">Trasferring files</string>
+    <string name="error_transfering">Error transferring the file</string>
+    <string name="success">Success, the file was saved as %s</string>
+
+
+    <array name="drawer_options">
+        <item>Send</item>
+        <item>Receive</item>
+    </array>
+</resources>

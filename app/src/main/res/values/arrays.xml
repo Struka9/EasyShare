@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="receiving_options">
+        <item>QR Code</item>
+        <item>NFC</item>
+    </string-array>
+</resources>
