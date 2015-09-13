@@ -5,6 +5,8 @@
     <string name="send">Send</string>
     <string name="receive">Receive</string>
 
+    <string name="select_file">Select File</string>
+
     <string name="waiting">Waiting for incoming connections...</string>
     <string name="client_connected">Accepted Connection</string>
     <string name="transfer_in_progress">Transfering file...</string>
@@ -14,9 +16,13 @@
     <string name="could_not_setup_detector">Couldn\'t setup the detector, please try again</string>
     <string name="scan_this">Scan this barcode with Easy Share to transfer the file</string>
     <string name="file_transfer_complete">The file has been copied to the other device</string>
-    <string name="trasnfering_files">Trasferring files</string>
-    <string name="error_transfering">Error transferring the file</string>
+    <string name="transferring_files">Trasferring files</string>
+    <string name="error_transferring">Error transferring the file</string>
     <string name="success">Success, the file was saved as %s</string>
+    <string name="nfc_desc">1. Make sure NFC is enabled in both devices\n2.Bring the devices back to back\n3.Tap on the sender\'s screen</string>
+    <string name="no_nfc_detected">This device doesn\'t have NFC available</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
 
 
     <array name="drawer_options">

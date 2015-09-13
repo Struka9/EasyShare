@@ -4,17 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/qr_code"
-        android:layout_width="380dp"
-        android:layout_height="380dp"
-        android:layout_gravity="center_horizontal"
-        android:scaleType="fitXY"
-        android:layout_margin="@dimen/activity_horizontal_margin" />
+    <android.support.v4.view.ViewPager
+        android:id="@+id/send_methods_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
-    <TextView
-        android:text="@string/scan_this"
-        android:gravity="center"
+    <com.viewpagerindicator.TitlePageIndicator
+        android:id="@+id/titles"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 </LinearLayout>

@@ -8,6 +8,8 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.hardware.Camera;
 import android.net.Uri;
+import android.nfc.NfcAdapter;
+import android.os.Build;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.util.TypedValue;
@@ -128,5 +130,16 @@ public class Util {
         Resources r = context.getResources();
         float px = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics());
         return px;
+    }
+
+    /** Returns the default NFC Adapter instance or null if it's not available*/
+    public static NfcAdapter getNfcAdapter(Context context) {
+        if (!context.getPackageManager().hasSystemFeature(PackageManager.FEATURE_NFC)) {
+            return null;
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return null;
+        } else {
+            return NfcAdapter.getDefaultAdapter(context);
+        }
     }
 }

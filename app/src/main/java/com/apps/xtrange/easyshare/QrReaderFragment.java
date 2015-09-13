@@ -61,7 +61,7 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
 
                     isReceiving = true;
 
-                    mProgress = ProgressDialog.show(getActivity(), getString(R.string.trasnfering_files), "", true);
+                    mProgress = ProgressDialog.show(getActivity(), getString(R.string.transferring_files), "", true);
                     Calendar c = Calendar.getInstance();
                     String hash = Long.toHexString(c.getTimeInMillis());
                     String fileName = hash + "." + ipAddress[3];
@@ -220,7 +220,7 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
         if (mProgress != null)
             mProgress.dismiss();
 
-        Toast.makeText(getActivity(), R.string.error_transfering, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), R.string.error_transferring, Toast.LENGTH_SHORT).show();
     }
 
     @Override

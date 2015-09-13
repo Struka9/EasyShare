@@ -3,6 +3,22 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:buttonStyle">@style/AppTheme.Button</item>
+        <item name="actionBarStyle">@style/ActionBar.Solid.AppTheme</item>
     </style>
 
+    <style name="AppTheme.Button">
+        <item name="android:background">@drawable/ic_button_style</item>
+    </style>
+
+    <style name="ActionBar.Solid.AppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">
+        <item name="background">@drawable/ab_solid_apptheme</item>
+        <item name="backgroundStacked">@drawable/ab_stacked_solid_apptheme</item>
+        <item name="backgroundSplit">@drawable/ab_bottom_solid_apptheme</item>
+        <item name="progressBarStyle">@style/ProgressBar.AppTheme</item>
+    </style>
+
+    <style name="ProgressBar.AppTheme" parent="@style/Widget.AppCompat.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/progress_horizontal_apptheme</item>
+    </style>
 </resources>
