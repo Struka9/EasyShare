@@ -29,7 +29,7 @@
     </layouts>
   </component>
   <component name="AndroidLogFilters">
-    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Eas" />
+    <option name="TOOL_WINDOW_CUSTOM_FILTER" value="Easy" />
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="Show only selected application" />
   </component>
   <component name="ChangeListManager">
@@ -80,34 +80,34 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="QrReaderFragment.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="QrReaderFragment.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="233" column="61" selection-start-line="233" selection-start-column="61" selection-end-line="233" selection-end-column="61" />
+            <state vertical-scroll-proportion="0.5575916">
+              <caret line="64" column="133" selection-start-line="64" selection-start-column="133" selection-end-line="64" selection-end-column="133" />
               <folding>
-                <element signature="e#1843#3232#0" expanded="true" />
-                <element signature="e#2021#3214#0" expanded="true" />
-                <element signature="e#2611#2649#0" expanded="true" />
-                <element signature="e#3213#3214#0" expanded="true" />
-                <element signature="e#3231#3232#0" expanded="true" />
-                <element signature="e#8703#8730#0" expanded="true" />
-                <element signature="e#8947#8974#0" expanded="true" />
-                <element signature="e#9133#9145#0" expanded="true" />
-                <element signature="e#9147#9924#0" expanded="true" />
-                <element signature="e#9923#9924#0" expanded="true" />
-                <element signature="e#9961#9972#0" expanded="true" />
-                <element signature="e#9974#10250#0" expanded="true" />
-                <element signature="e#10249#10250#0" expanded="true" />
+                <element signature="e#1843#3390#0" expanded="true" />
+                <element signature="e#2021#3372#0" expanded="true" />
+                <element signature="e#2769#2807#0" expanded="true" />
+                <element signature="e#3371#3372#0" expanded="true" />
+                <element signature="e#3389#3390#0" expanded="true" />
+                <element signature="e#8861#8888#0" expanded="true" />
+                <element signature="e#9105#9132#0" expanded="true" />
+                <element signature="e#9291#9303#0" expanded="true" />
+                <element signature="e#9305#10082#0" expanded="true" />
+                <element signature="e#10081#10082#0" expanded="true" />
+                <element signature="e#10119#10130#0" expanded="true" />
+                <element signature="e#10132#10408#0" expanded="true" />
+                <element signature="e#10407#10408#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleFileReceiver.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SimpleFileReceiver.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SimpleFileReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="4.6688743">
+            <state vertical-scroll-proportion="-57.724136">
               <caret line="131" column="59" selection-start-line="131" selection-start-column="59" selection-end-line="131" selection-end-column="59" />
               <folding>
                 <element signature="e#1255#4407#0" expanded="true" />
@@ -2021,8 +2021,8 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/select_files_fragment.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/styles.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SimpleFileReceiver.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java" />
       </list>
     </option>
   </component>
@@ -2279,7 +2279,7 @@
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="recentsLimit" value="5" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="01cbe0b5cc178260" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="08e6a9a2" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="OverrideImplement.combined" value="false" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
@@ -2529,20 +2529,20 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
-    <editor active="false" />
+    <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32879046" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33730835" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6592845" sideWeight="0.5030257" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32676518" sideWeight="0.5043924" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32676518" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32676518" sideWeight="0.4956076" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Android" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.6584565" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6584565" sideWeight="0.4969743" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2408492" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -3004,28 +3004,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="233" column="61" selection-start-line="233" selection-start-column="61" selection-end-line="233" selection-end-column="61" />
-          <folding>
-            <element signature="e#1843#3232#0" expanded="true" />
-            <element signature="e#2021#3214#0" expanded="true" />
-            <element signature="e#2611#2649#0" expanded="true" />
-            <element signature="e#3213#3214#0" expanded="true" />
-            <element signature="e#3231#3232#0" expanded="true" />
-            <element signature="e#8703#8730#0" expanded="true" />
-            <element signature="e#8947#8974#0" expanded="true" />
-            <element signature="e#9133#9145#0" expanded="true" />
-            <element signature="e#9147#9924#0" expanded="true" />
-            <element signature="e#9923#9924#0" expanded="true" />
-            <element signature="e#9961#9972#0" expanded="true" />
-            <element signature="e#9974#10250#0" expanded="true" />
-            <element signature="e#10249#10250#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SimpleFileSender.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="42.793102">
@@ -3039,11 +3017,33 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SimpleFileReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="4.6688743">
+        <state vertical-scroll-proportion="-57.724136">
           <caret line="131" column="59" selection-start-line="131" selection-start-column="59" selection-end-line="131" selection-end-column="59" />
           <folding>
             <element signature="e#1255#4407#0" expanded="true" />
             <element signature="e#4406#4407#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.5575916">
+          <caret line="64" column="133" selection-start-line="64" selection-start-column="133" selection-end-line="64" selection-end-column="133" />
+          <folding>
+            <element signature="e#1843#3390#0" expanded="true" />
+            <element signature="e#2021#3372#0" expanded="true" />
+            <element signature="e#2769#2807#0" expanded="true" />
+            <element signature="e#3371#3372#0" expanded="true" />
+            <element signature="e#3389#3390#0" expanded="true" />
+            <element signature="e#8861#8888#0" expanded="true" />
+            <element signature="e#9105#9132#0" expanded="true" />
+            <element signature="e#9291#9303#0" expanded="true" />
+            <element signature="e#9305#10082#0" expanded="true" />
+            <element signature="e#10081#10082#0" expanded="true" />
+            <element signature="e#10119#10130#0" expanded="true" />
+            <element signature="e#10132#10408#0" expanded="true" />
+            <element signature="e#10407#10408#0" expanded="true" />
           </folding>
         </state>
       </provider>

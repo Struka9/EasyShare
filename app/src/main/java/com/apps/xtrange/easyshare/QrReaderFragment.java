@@ -61,8 +61,10 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
 
                     String[] ipAddress = barcode.rawValue.split(":");
 
-                    if (isReceiving)
+                    if (isReceiving) {
+                        Toast.makeText(getActivity(), "Found server but it's already transferring files", Toast.LENGTH_SHORT).show();
                         return;
+                    }
 
                     isReceiving = true;
 
