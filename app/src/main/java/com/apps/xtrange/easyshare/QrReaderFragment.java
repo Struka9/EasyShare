@@ -1,8 +1,12 @@
 package com.apps.xtrange.easyshare;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.MimeTypeMap;
 import android.widget.Toast;
 
 import com.apps.xtrange.easyshare.vision.BarcodeTrackerFactory;
@@ -23,6 +28,7 @@ import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -53,13 +59,14 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
 
                     if (!matcher.matches()) return;
 
-                    Toast.makeText(getActivity(), "Connecting to " + barcode.rawValue, Toast.LENGTH_SHORT).show();
                     String[] ipAddress = barcode.rawValue.split(":");
 
                     if (isReceiving)
                         return;
 
                     isReceiving = true;
+
+                    Toast.makeText(getActivity(), "Connecting to " + barcode.rawValue, Toast.LENGTH_SHORT).show();
 
                     mProgress = ProgressDialog.show(getActivity(), getString(R.string.transferring_files), "", true);
                     Calendar c = Calendar.getInstance();
@@ -224,10 +231,38 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
     }
 
     @Override
-    public void onFinished(String fileName) {
+    public void onFinished(final Uri fileUri, String filePath) {
         if (mProgress != null)
             mProgress.dismiss();
-        String text = String.format(getString(R.string.success), fileName);
-        Toast.makeText(getActivity(), text, Toast.LENGTH_SHORT).show();
+
+        String text = String.format(getString(R.string.success), filePath);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setMessage(text)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        MimeTypeMap map = MimeTypeMap.getSingleton();
+                        String ext = getActivity().getContentResolver().getType(fileUri);
+                        String type = map.getMimeTypeFromExtension(ext);
+
+                        if (type == null)
+                            type = "*/*";
+
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setDataAndType(fileUri, type);
+                        startActivity(intent);
+
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                        getActivity().finish();
+                    }
+                }).show();
+
     }
 }

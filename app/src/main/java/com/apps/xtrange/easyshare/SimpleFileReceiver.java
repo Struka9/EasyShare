@@ -1,6 +1,7 @@
 package com.apps.xtrange.easyshare;
 
 import android.content.Context;
+import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
 
@@ -67,7 +68,7 @@ public class SimpleFileReceiver {
                     byte[] bytes = new byte[BUFFER_SIZE];
                     InputStream is = sock.getInputStream();
 
-                    File outputFile = new File(externalFilesDir, mFileName);
+                    final File outputFile = new File(externalFilesDir, mFileName);
 
                     //outputFile.mkdirs();
 
@@ -96,7 +97,8 @@ public class SimpleFileReceiver {
                         new Handler(mContext.getMainLooper()).post(new Runnable() {
                             @Override
                             public void run() {
-                                mListener.onConnected();
+
+                                mListener.onFinished(Uri.fromFile(outputFile), outputFile.getAbsolutePath());
                             }
                         });
                     }
@@ -120,15 +122,6 @@ public class SimpleFileReceiver {
                         }
 
                 }
-                if (mListener != null) {
-                    new Handler(mContext.getMainLooper()).post(new Runnable() {
-                        @Override
-                        public void run() {
-                            mListener.onFinished(mFileName);
-                        }
-                    });
-                }
-
             }
         }).start();
     }
@@ -136,6 +129,6 @@ public class SimpleFileReceiver {
     public interface ReceiverEventsListener {
         public void onConnected();
         public void onError(Exception e);
-        public void onFinished(String fileName);
+        public void onFinished(Uri fileUri, String filePath);
     }
 }
