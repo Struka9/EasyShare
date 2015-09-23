@@ -27,7 +27,7 @@ public class SimpleFileSender {
     private static final int PORT_START_RANGE = 49000;
     private static final int PORT_END_RANGE = 65000;
 
-    private static final int BUFFER_SIZE = 4096;
+    private static final int BUFFER_SIZE = 65536;
 
     public SimpleFileSender(Context context, Uri fileUri, SenderEventsListener listener) {
         mFileUri = fileUri;
@@ -95,8 +95,7 @@ public class SimpleFileSender {
                             int read = bufferedInputStream.read(bytes, 0, bytes.length);
 
                             while (read != -1) {
-                                Util.LogDebug(TAG, "Sending " + mFileUri + "(" + bytes.length + " bytes)");
-                                outputStream.write(bytes, 0, bytes.length);
+                                outputStream.write(bytes, 0, read);
                                 read = bufferedInputStream.read(bytes, 0, bytes.length);
                             }
 

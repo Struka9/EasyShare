@@ -25,7 +25,7 @@ public class SimpleFileReceiver {
     private String mFileName;
     private ReceiverEventsListener mListener;
 
-    public final static int BUFFER_SIZE = 6022386;
+    public final static int BUFFER_SIZE = 65536;
 
     private Context mContext;
 

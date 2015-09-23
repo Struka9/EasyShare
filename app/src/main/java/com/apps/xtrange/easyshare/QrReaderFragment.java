@@ -57,7 +57,10 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
                 public void run() {
                     Matcher matcher = Constants.CONTENTS_PATTERN.matcher(barcode.rawValue);
 
-                    if (!matcher.matches()) return;
+                    if (!matcher.matches()) {
+                        Toast.makeText(getActivity(), "It's not a valid Easy Share code.", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
 
                     String[] ipAddress = barcode.rawValue.split(":");
 
