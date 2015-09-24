@@ -36,7 +36,7 @@ import java.util.regex.Matcher;
 /**
  * Created by Oscar on 9/10/2015.
  */
-public class QrReaderFragment extends Fragment implements View.OnClickListener, SimpleFileReceiver.ReceiverEventsListener {
+public class QrReaderFragment extends Fragment {
     private static final int RC_HANDLE_GMS = 9001;
 
     private static final String TAG = QrReaderFragment.class.getSimpleName();
@@ -78,21 +78,17 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
                     String hash = Long.toHexString(c.getTimeInMillis());
                     String fileName = hash + "." + ipAddress[3];
 
-                    SimpleFileReceiver receiver = new SimpleFileReceiver(getActivity(),
-                            Integer.parseInt(ipAddress[1]),
-                            ipAddress[0],
-                            fileName,
-                            QrReaderFragment.this);
-                    receiver.receiveFiles();
+                    Intent receiverIntent = new Intent(getActivity(), SimpleFileReceiver.class);
+                    receiverIntent.putExtra(Constants.EXTRA_IP_ADDRESS, ipAddress[0]);
+                    receiverIntent.putExtra(SimpleFileSender.EXTRA_PORT_USED, ipAddress[1]);
+                    receiverIntent.putExtra(Constants.EXTRA_FILENAME, fileName);
+
+                    getActivity().startService(receiverIntent);
+
                 }
             });
         }
     };
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-    }
 
     /**
      * Restarts the camera.
@@ -137,11 +133,6 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
         createCameraSource();
 
         return layout;
-    }
-
-    @Override
-    public void onClick(View v) {
-        //new SimpleFileReceiver(getActivity(), 50333, "192.168.0.3", "file.png").receiveFiles();
     }
 
     /**
@@ -220,54 +211,5 @@ public class QrReaderFragment extends Fragment implements View.OnClickListener, 
                 mCameraSource = null;
             }
         }
-    }
-
-    @Override
-    public void onConnected() {
-
-    }
-
-    @Override
-    public void onError(Exception e) {
-        if (mProgress != null)
-            mProgress.dismiss();
-
-        Toast.makeText(getActivity(), R.string.error_transferring, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onFinished(final Uri fileUri, String filePath) {
-        if (mProgress != null)
-            mProgress.dismiss();
-
-        String text = String.format(getString(R.string.success), filePath);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage(text)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        MimeTypeMap map = MimeTypeMap.getSingleton();
-                        String ext = getActivity().getContentResolver().getType(fileUri);
-                        String type = map.getMimeTypeFromExtension(ext);
-
-                        if (type == null)
-                            type = "*/*";
-
-                        Intent intent = new Intent(Intent.ACTION_VIEW);
-                        intent.setDataAndType(fileUri, type);
-                        startActivity(intent);
-
-                        dialog.dismiss();
-                        getActivity().finish();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                        getActivity().finish();
-                    }
-                }).show();
-
     }
 }

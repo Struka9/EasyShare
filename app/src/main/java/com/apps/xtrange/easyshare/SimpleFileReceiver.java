@@ -1,9 +1,14 @@
 package com.apps.xtrange.easyshare;
 
+import android.app.IntentService;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v7.app.NotificationCompat;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -17,118 +22,101 @@ import java.net.UnknownHostException;
 /**
  * Created by Oscar on 9/1/2015.
  */
-public class SimpleFileReceiver {
+public class SimpleFileReceiver extends IntentService {
+
 
     private static final String TAG = SimpleFileReceiver.class.getSimpleName();
+    private static final int NOTIFICATION_ID = 0x01337;
+
     private int mPort;
     private String mIpAddress;
     private String mFileName;
-    private ReceiverEventsListener mListener;
 
     public final static int BUFFER_SIZE = 65536;
 
-    private Context mContext;
-
-    public SimpleFileReceiver(Context context, int port, String ipAddress, String fileName, ReceiverEventsListener listener) {
-        mIpAddress = ipAddress;
-        mPort = port;
-        mContext = context;
-        mFileName = fileName;
-        mListener = listener;
+    /**
+     * Creates an IntentService.  Invoked by your subclass's constructor.
+     *
+     * @param name Used to name the worker thread, important only for debugging.
+     */
+    public SimpleFileReceiver(String name) {
+        super(name);
     }
 
-    public SimpleFileReceiver(Context context, int port, String ipAddress, String fileName) {
-        this(context, port, ipAddress, fileName, null);
-    }
 
-    public void receiveFiles() {
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                File externalFilesDir = Environment.getExternalStorageDirectory();
-                int bytesRead;
-                int current = 0;
-                FileOutputStream fos = null;
-                BufferedOutputStream bos = null;
-                Socket sock = null;
-                try {
-                    Util.LogDebug(TAG, "Connecting...");
-                    sock = new Socket(mIpAddress, mPort);
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        mIpAddress = intent.getStringExtra(Constants.EXTRA_IP_ADDRESS);
+        mPort = intent.getIntExtra(SimpleFileSender.EXTRA_PORT_USED, -1);
+        mFileName = intent.getStringExtra(Constants.EXTRA_FILENAME);
 
-                    if (mListener != null) {
-                        new Handler(mContext.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mListener.onConnected();
-                            }
-                        });
-                    }
+        File externalFilesDir = Environment.getExternalStorageDirectory();
+        int bytesRead;
+        int current = 0;
+        FileOutputStream fos = null;
+        BufferedOutputStream bos = null;
+        Socket sock = null;
+        try {
+            Util.LogDebug(TAG, "Connecting...");
+            sock = new Socket(mIpAddress, mPort);
 
-                    // receive file
-                    byte[] bytes = new byte[BUFFER_SIZE];
-                    InputStream is = sock.getInputStream();
+            //The service connected to the sender service
 
-                    final File outputFile = new File(externalFilesDir, mFileName);
+            // receive file
+            byte[] bytes = new byte[BUFFER_SIZE];
+            InputStream is = sock.getInputStream();
 
-                    //outputFile.mkdirs();
+            final File outputFile = new File(externalFilesDir, mFileName);
 
-                    fos = new FileOutputStream(outputFile);
-                    bos = new BufferedOutputStream(fos);
-                    bytesRead = is.read(bytes, 0, bytes.length);
-                    current = bytesRead;
+            //outputFile.mkdirs();
 
-                    while (bytesRead > -1) {
+            fos = new FileOutputStream(outputFile);
+            bos = new BufferedOutputStream(fos);
+            bytesRead = is.read(bytes, 0, bytes.length);
+            current = bytesRead;
 
-                        if (bytesRead >= 0) {
-                            bos.write(bytes, 0, bytesRead);
-                            current += bytesRead;
-                        }
+            while (bytesRead > -1) {
 
-                        bytesRead =
-                                is.read(bytes, 0, bytes.length);
-                    }
-
-                    //bos.write(bytes, 0, current);
-                    bos.flush();
-                    Util.LogDebug(TAG, "File " + outputFile.getName()
-                            + " downloaded (" + current + " bytes read)");
-
-                    if (mListener != null) {
-                        new Handler(mContext.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-
-                                mListener.onFinished(Uri.fromFile(outputFile), outputFile.getAbsolutePath());
-                            }
-                        });
-                    }
-                } catch (final Exception e) {
-                    if (mListener != null) {
-                        new Handler(mContext.getMainLooper()).post(new Runnable() {
-                            @Override
-                            public void run() {
-                                mListener.onError(e);
-                            }
-                        });
-                    }
-                } finally {
-                    if (fos != null)
-                        try {
-                            fos.close();
-                            if (bos != null) bos.close();
-                            if (sock != null) sock.close();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-
+                if (bytesRead >= 0) {
+                    bos.write(bytes, 0, bytesRead);
+                    current += bytesRead;
                 }
-            }
-        }).start();
-    }
 
-    public interface ReceiverEventsListener {
-        public void onConnected();
-        public void onError(Exception e);
-        public void onFinished(Uri fileUri, String filePath);
+                bytesRead =
+                        is.read(bytes, 0, bytes.length);
+            }
+
+            //bos.write(bytes, 0, current);
+            bos.flush();
+            Util.LogDebug(TAG, "File " + outputFile.getName()
+                    + " downloaded (" + current + " bytes read)");
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
+            builder.setSmallIcon(R.drawable.ic_launcher)
+                    .setContentTitle(getString(R.string.success))
+                    .setOngoing(false);
+
+            Intent resultIntent = new Intent(Intent.ACTION_VIEW);
+            resultIntent.setData(Uri.fromFile(outputFile));
+
+            PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);
+            builder.setContentIntent(resultPendingIntent);
+
+            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+            notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+        } catch (final Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (fos != null)
+                try {
+                    fos.close();
+                    if (bos != null) bos.close();
+                    if (sock != null) sock.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+        }
     }
 }

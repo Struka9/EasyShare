@@ -10,4 +10,12 @@ public class Constants {
 
     public static final Pattern CONTENTS_PATTERN = Pattern.compile("([0-9]{1,3}\\.){3}[0-9]{1,3}:[0-9]+:" +
             String.valueOf(MAGIC_NUMBER) + ":" + "[a-zA-Z]+");
+
+    public static final String BROADCAST_BASE = "com.apps.xtrange.easyshare.";
+    public static final String BROADCAST_CLIENT_CONNECTED = BROADCAST_BASE + "CLIENT_CONNECTED";
+    public static final String BROADCAST_SERVICE_STARTED = BROADCAST_BASE + "SERVICE_STARTED";
+    public static final String BROADCAST_SERVICE_FINISHED = BROADCAST_BASE + "SERVICE_FINISHED";
+
+    public static final String EXTRA_IP_ADDRESS = "extra-ip";
+    public static final String EXTRA_FILENAME = "extra-filename";
 }

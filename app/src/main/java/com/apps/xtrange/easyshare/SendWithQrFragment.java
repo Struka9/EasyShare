@@ -1,10 +1,16 @@
 package com.apps.xtrange.easyshare;
 
+import android.app.Activity;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +26,7 @@ import com.google.zxing.qrcode.QRCodeWriter;
 /**
  * Created by Oscar on 9/12/2015.
  */
-public class SendWithQrFragment extends Fragment implements SimpleFileSender.SenderEventsListener {
+public class SendWithQrFragment extends Fragment {
 
     public static Fragment newInstance(Uri fileUri) {
         Fragment f = new SendWithQrFragment();
@@ -35,9 +41,32 @@ public class SendWithQrFragment extends Fragment implements SimpleFileSender.Sen
 
     private static final String TAG = SendWithQrFragment.class.getSimpleName();
     private ImageView mQrCodeImage;
-    private SimpleFileSender mFileSenderServer;
 
     private Uri mFileUri;
+
+    private FileSenderBroadcastReceiver mReceiver = new FileSenderBroadcastReceiver();
+
+    private Bitmap mQrCodeBitmap;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+
+        IntentFilter intentFilter = new IntentFilter();
+        intentFilter.addAction(Constants.BROADCAST_CLIENT_CONNECTED);
+        intentFilter.addAction(Constants.BROADCAST_SERVICE_STARTED);
+        intentFilter.addAction(Constants.BROADCAST_SERVICE_STARTED);
+
+        LocalBroadcastManager.getInstance(activity).registerReceiver(mReceiver, intentFilter);
+
+        startSendFilesServer();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
+    }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -55,28 +84,24 @@ public class SendWithQrFragment extends Fragment implements SimpleFileSender.Sen
         View layout = inflater.inflate(R.layout.send_with_qr_layout, container, false);
         mQrCodeImage = (ImageView) layout.findViewById(R.id.qr_code);
 
-        startSendFilesServer();
-
-        generateQrCode();
+        if (mQrCodeBitmap != null) {
+            mQrCodeImage.setImageBitmap(mQrCodeBitmap);
+        }
 
         return layout;
     }
 
     private void startSendFilesServer() {
+        Intent senderServiceIntent = new Intent(getActivity(), SimpleFileSender.class);
+        getActivity().startService(senderServiceIntent);
 
-        if (mFileSenderServer != null)
-            mFileSenderServer.stopServer();
-
-        mFileSenderServer = new SimpleFileSender(getActivity(), mFileUri, this);
-        mFileSenderServer.startServer();
     }
 
-    private void generateQrCode() {
+    private void generateQrCode(int serverPort) {
         String mimeType = getActivity().getContentResolver().getType(mFileUri);
         String extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(mimeType);
 
         String ipAddress = Util.getIPAddress(true);
-        int serverPort = mFileSenderServer.getPortUsed();
 
         Util.LogDebug(TAG, ipAddress);
         String barcodeContents = ipAddress + ":"
@@ -95,38 +120,37 @@ public class SendWithQrFragment extends Fragment implements SimpleFileSender.Sen
                     (int) Util.dpToPixels(400, getActivity()),
                     (int) Util.dpToPixels(400, getActivity()));
 
-            Bitmap qrCode = Util.toBitmap(matrix);
-            mQrCodeImage.setImageBitmap(qrCode);
+            mQrCodeBitmap = Util.toBitmap(matrix);
+
+            if (mQrCodeImage != null)
+                mQrCodeImage.setImageBitmap(mQrCodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+    private class FileSenderBroadcastReceiver extends BroadcastReceiver {
 
-        if (mFileSenderServer != null)
-            mFileSenderServer.stopServer();
-    }
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
 
-    @Override
-    public void onServerStarted() {
-        generateQrCode();
-    }
+            switch (action) {
+                case Constants.BROADCAST_SERVICE_STARTED:
+                    int portUsed = intent.getIntExtra(SimpleFileSender.EXTRA_PORT_USED, -1);
 
-    @Override
-    public void onCompleted() {
-        Toast.makeText(getActivity(), R.string.file_transfer_complete, Toast.LENGTH_LONG).show();
-        getActivity().finish();
-    }
-
-    @Override
-    public void onClientConnected() {
-    }
-
-    @Override
-    public void onServerError(Exception e) {
-        e.printStackTrace();
+                    if (portUsed == -1) {
+                        Util.LogError(TAG, "Something went wrong, the port is -1");
+                    }
+                    generateQrCode(portUsed);
+                    break;
+                case Constants.BROADCAST_CLIENT_CONNECTED:
+                    break;
+                case Constants.BROADCAST_SERVICE_FINISHED:
+                    Toast.makeText(getActivity(), R.string.file_transfer_complete, Toast.LENGTH_LONG).show();
+                    getActivity().finish();
+                    break;
+            }
+        }
     }
 }
