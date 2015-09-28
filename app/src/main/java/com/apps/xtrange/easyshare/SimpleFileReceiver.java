@@ -5,10 +5,13 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
 import android.os.Handler;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
+import android.webkit.MimeTypeMap;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
@@ -41,6 +44,10 @@ public class SimpleFileReceiver extends IntentService {
      */
     public SimpleFileReceiver(String name) {
         super(name);
+    }
+
+    public SimpleFileReceiver() {
+        super(SimpleFileReceiver.class.getSimpleName());
     }
 
 
@@ -96,14 +103,32 @@ public class SimpleFileReceiver extends IntentService {
                     .setContentTitle(getString(R.string.success))
                     .setOngoing(false);
 
-            Intent resultIntent = new Intent(Intent.ACTION_VIEW);
-            resultIntent.setData(Uri.fromFile(outputFile));
+            Uri uri = Uri.fromFile(outputFile);
+
+            Util.LogDebug(TAG, uri.toString());
+
+            MimeTypeMap map = MimeTypeMap.getSingleton();
+            String ext = getContentResolver().getType(uri);
+            String type = map.getMimeTypeFromExtension(ext);
+
+            if (type == null)
+                type = "*/*";
+
+            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+            resultIntent.setDataAndType(uri, type);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
             PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0, resultIntent, 0);
             builder.setContentIntent(resultPendingIntent);
 
             NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
             notificationManager.notify(NOTIFICATION_ID, builder.build());
+
+
+            Intent broadCast = new Intent();
+            broadCast.setAction(Constants.BROADCAST_SERVICE_FINISHED);
+            LocalBroadcastManager.getInstance(getBaseContext()).sendBroadcast(broadCast);
 
         } catch (final Exception e) {
             e.printStackTrace();

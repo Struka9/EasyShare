@@ -3,13 +3,16 @@ package com.apps.xtrange.easyshare;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -48,6 +51,8 @@ public class QrReaderFragment extends Fragment {
 
     private boolean isReceiving;
 
+    private StatusReceiver mBroadcastReceiver = new StatusReceiver();
+
     private BarcodeTrackerFactory.OnBarcodeReceivedListener mOnBarcodeReceivedListener = new BarcodeTrackerFactory.OnBarcodeReceivedListener() {
 
         @Override
@@ -80,11 +85,10 @@ public class QrReaderFragment extends Fragment {
 
                     Intent receiverIntent = new Intent(getActivity(), SimpleFileReceiver.class);
                     receiverIntent.putExtra(Constants.EXTRA_IP_ADDRESS, ipAddress[0]);
-                    receiverIntent.putExtra(SimpleFileSender.EXTRA_PORT_USED, ipAddress[1]);
+                    receiverIntent.putExtra(SimpleFileSender.EXTRA_PORT_USED, Integer.parseInt(ipAddress[1]));
                     receiverIntent.putExtra(Constants.EXTRA_FILENAME, fileName);
 
                     getActivity().startService(receiverIntent);
-
                 }
             });
         }
@@ -98,6 +102,9 @@ public class QrReaderFragment extends Fragment {
         super.onResume();
 
         startCameraSource();
+
+        IntentFilter filter = new IntentFilter(Constants.BROADCAST_SERVICE_FINISHED);
+        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver, filter);
     }
 
     /**
@@ -107,6 +114,8 @@ public class QrReaderFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mPreview.stop();
+
+        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mBroadcastReceiver);
     }
 
     /**
@@ -210,6 +219,19 @@ public class QrReaderFragment extends Fragment {
                 mCameraSource.release();
                 mCameraSource = null;
             }
+        }
+    }
+
+    private class StatusReceiver extends BroadcastReceiver {
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            isReceiving = false;
+
+            if (mProgress != null)
+                mProgress.dismiss();
+
+            Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();
         }
     }
 }

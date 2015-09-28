@@ -42,6 +42,10 @@ public class SimpleFileSender extends IntentService {
         super(name);
     }
 
+    public SimpleFileSender() {
+        super(SimpleFileSender.class.getSimpleName());
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         mFileUri = intent.getParcelableExtra(EXTRA_URI);

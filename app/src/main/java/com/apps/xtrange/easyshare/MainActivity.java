@@ -1,5 +1,7 @@
 package com.apps.xtrange.easyshare;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -29,6 +31,19 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Uri fileUri = getIntent().getData();
+
+        if (fileUri != null) {
+            String type = getIntent().getType();
+
+            Util.LogDebug("ActivityView", fileUri.toString());
+
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setDataAndType(fileUri, type);
+            startActivity(intent);
+
+        }
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayShowHomeEnabled(true);
