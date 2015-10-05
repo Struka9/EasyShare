@@ -4,4 +4,14 @@
         <item>QR Code</item>
         <item>NFC</item>
     </string-array>
+
+    <string-array name="security_options">
+        <item>Open</item>
+        <item>WEP</item>
+        <item>WPA/WPA2</item>
+    </string-array>
+    <string-array name="share_hotspot_options" >
+        <item>Generate</item>
+        <item>Scan</item>
+    </string-array>
 </resources>

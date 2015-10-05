@@ -109,6 +109,8 @@ public class SendWithQrFragment extends Fragment {
                 + ":" + String.valueOf(Constants.MAGIC_NUMBER)
                 + ":" + extension;
 
+        Util.LogDebug(TAG, barcodeContents);
+
         if (ipAddress == null || ipAddress.isEmpty()) {
             Toast.makeText(getActivity(), R.string.make_sure_same_network, Toast.LENGTH_LONG).show();
             return;

@@ -9,6 +9,8 @@
 
     <style name="AppTheme.Button">
         <item name="android:background">@drawable/ic_button_style</item>
+        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:padding">16dp</item>
     </style>
 
     <style name="ActionBar.Solid.AppTheme" parent="@style/Widget.AppCompat.Light.ActionBar.Solid.Inverse">

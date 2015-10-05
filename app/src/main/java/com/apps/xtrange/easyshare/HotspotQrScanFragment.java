@@ -1,15 +1,11 @@
 package com.apps.xtrange.easyshare;
 
 import android.app.Dialog;
-import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,62 +24,60 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
-import java.util.Calendar;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.regex.Matcher;
 
 /**
- * Created by Oscar on 9/10/2015.
+ * Created by oscarr on 10/4/15.
  */
-public class QrReaderFragment extends Fragment {
-
-    private static final String TAG = QrReaderFragment.class.getSimpleName();
-
+public class HotspotQrScanFragment extends Fragment {
+    private static final String TAG = HotspotQrScanFragment.class.getSimpleName();
     private CameraSource mCameraSource = null;
     private CameraSourcePreview mPreview;
     private GraphicOverlay mGraphicOverlay;
-    private ProgressDialog mProgress;
 
-    private boolean isReceiving;
-
-    private StatusReceiver mBroadcastReceiver = new StatusReceiver();
+    private boolean mLocked;
+    private WifiConfigManager.OnNetworkUpdateListener mNetworkUpdatedListener = new WifiConfigManager.OnNetworkUpdateListener() {
+        @Override
+        public void onNetworkUpdated() {
+            mLocked = false;
+        }
+    };
 
     private BarcodeTrackerFactory.OnBarcodeReceivedListener mOnBarcodeReceivedListener = new BarcodeTrackerFactory.OnBarcodeReceivedListener() {
-
         @Override
         public void onBarcodeReceived(final Barcode barcode) {
             getActivity().runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Matcher matcher = Constants.SHARE_FILES_PATTERN.matcher(barcode.rawValue);
+
+                    if (mLocked) return;
+
+                    Matcher matcher = Constants.SHARE_HOTSPOT_PATTERN.matcher(barcode.rawValue);
 
                     if (!matcher.matches()) {
                         Toast.makeText(getActivity(), "It's not a valid Easy Share code.", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
+                    mLocked = true;
+                    //values[0] = ssid, values[1] = encryption, values[2] = password (ssid and password are encoded)
+                    String[] values = barcode.rawValue.split(":");
+                    try {
+                        String ssid = URLDecoder.decode(values[0], "utf-8");
+                        String encrytpion = values[1];
+                        String password = URLDecoder.decode(values[2], "utf-8");
 
-                    String[] ipAddress = barcode.rawValue.split(":");
+                        Util.LogDebug(TAG, "SSID: " + ssid + " and password: " + password + " with encryption: " + encrytpion);
 
-                    if (isReceiving) {
-                        Toast.makeText(getActivity(), "Found server but it's already transferring files", Toast.LENGTH_SHORT).show();
-                        return;
+                        WifiManager wifiManager = (WifiManager) getActivity().getSystemService(Context.WIFI_SERVICE);
+
+                        new WifiConfigManager(wifiManager, mNetworkUpdatedListener).execute(ssid, password, encrytpion);
+                    } catch (UnsupportedEncodingException e) {
+                        e.printStackTrace();
                     }
 
-                    isReceiving = true;
-
-                    Toast.makeText(getActivity(), "Connecting to " + barcode.rawValue, Toast.LENGTH_SHORT).show();
-
-                    mProgress = ProgressDialog.show(getActivity(), getString(R.string.transferring_files), "", true);
-                    Calendar c = Calendar.getInstance();
-                    String hash = Long.toHexString(c.getTimeInMillis());
-                    String fileName = hash + "." + ipAddress[3];
-
-                    Intent receiverIntent = new Intent(getActivity(), SimpleFileReceiver.class);
-                    receiverIntent.putExtra(Constants.EXTRA_IP_ADDRESS, ipAddress[0]);
-                    receiverIntent.putExtra(SimpleFileSender.EXTRA_PORT_USED, Integer.parseInt(ipAddress[1]));
-                    receiverIntent.putExtra(Constants.EXTRA_FILENAME, fileName);
-
-                    getActivity().startService(receiverIntent);
                 }
             });
         }
@@ -97,9 +91,6 @@ public class QrReaderFragment extends Fragment {
         super.onResume();
 
         startCameraSource();
-
-        IntentFilter filter = new IntentFilter(Constants.BROADCAST_SERVICE_FINISHED);
-        LocalBroadcastManager.getInstance(getActivity()).registerReceiver(mBroadcastReceiver, filter);
     }
 
     /**
@@ -109,8 +100,6 @@ public class QrReaderFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mPreview.stop();
-
-        LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mBroadcastReceiver);
     }
 
     /**
@@ -214,19 +203,6 @@ public class QrReaderFragment extends Fragment {
                 mCameraSource.release();
                 mCameraSource = null;
             }
-        }
-    }
-
-    private class StatusReceiver extends BroadcastReceiver {
-
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            isReceiving = false;
-
-            if (mProgress != null)
-                mProgress.dismiss();
-
-            Toast.makeText(getActivity(), R.string.success, Toast.LENGTH_SHORT).show();
         }
     }
 }

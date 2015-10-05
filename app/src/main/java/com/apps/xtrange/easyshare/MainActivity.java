@@ -1,96 +1,40 @@
 package com.apps.xtrange.easyshare;
 
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.ListView;
+import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
-
-    private DrawerLayout mDrawerLayout;
-    private ListView mDrawerList;
-    private FrameLayout mContentLayout;
-
-    private String[] mDrawerTitles;
-    private CharSequence mCurrentTitle;
-
-    private Fragment[] mDrawerFragments;
+/**
+ * Created by oscarr on 10/3/15.
+ */
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+    }
 
-        Uri fileUri = getIntent().getData();
+    public void onClick(View view) {
+        Intent startActivityIntent = null;
 
-        if (fileUri != null) {
-            String type = getIntent().getType();
+        switch (view.getId()) {
+            case R.id.share_files_bt:
+                startActivityIntent = new Intent(this, ShareFilesActivity.class);
+                break;
+            case R.id.share_hotspot_nfc_bt:
+                //startActivityIntent = new Intent(this, )
+                break;
+            case R.id.share_hotspot_wifi_bt:
+                startActivityIntent = new Intent(this, ShareHotspotWifiQrActivity.class);
+                break;
+            default:
 
-            Util.LogDebug("ActivityView", fileUri.toString());
-
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setDataAndType(fileUri, type);
-            startActivity(intent);
-
+                break;
         }
 
-        ActionBar actionBar = getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-
-
-        mDrawerTitles = getResources().getStringArray(R.array.drawer_options);
-        mDrawerFragments = new Fragment[mDrawerTitles.length];
-
-        mDrawerFragments[0] = new SelectFilesFragment();
-        mDrawerFragments[1] = new ReceiveFragment();
-
-        mContentLayout = (FrameLayout)findViewById(R.id.content_frame);
-        mDrawerLayout = (DrawerLayout)findViewById(R.id.drawer_layout);
-
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this,
-                mDrawerLayout,
-                R.string.open,
-                R.string.close);
-
-        mDrawerList = (ListView)findViewById(R.id.drawer_list);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this, R.layout.drawer_item, R.id.text, mDrawerTitles));
-        mDrawerList.setOnItemClickListener(this);
-
-        selectItem(0);
-    }
-
-    @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        selectItem(position);
-    }
-
-    private void selectItem(int position) {
-        Fragment f = mDrawerFragments[position];
-        FragmentManager fm = getSupportFragmentManager();
-        FragmentTransaction ft = fm.beginTransaction();
-
-        ft.replace(R.id.content_frame, f, mDrawerTitles[position]);
-        ft.commit();
-
-        mDrawerList.setItemChecked(position, true);
-        setTitle(mDrawerTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
-    }
-
-    @Override
-    public void setTitle(CharSequence title) {
-        mCurrentTitle = title;
-        getSupportActionBar().setTitle(mCurrentTitle);
+        startActivity(startActivityIntent);
     }
 }

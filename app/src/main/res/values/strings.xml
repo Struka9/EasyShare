@@ -25,8 +25,16 @@
     <string name="close">Close</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="share_files">Share Files</string>
+    <string name="share_hotspot_nfc">Share Hotspot via NFC</string>
+    <string name="share_hotspot_wifi">Share Hotspot via Wifi</string>
+    <string name="ssid">SSID</string>
+    <string name="password">Password</string>
+    <string name="generate">Generate</string>
+    <string name="empty_ssid">At least enter the SSID</string>
+    <string name="missing_password">Did you forget the password?</string>
 
-    <array name="drawer_options">
+    <array name="share_files_activity_options">
         <item>Send</item>
         <item>Receive</item>
     </array>

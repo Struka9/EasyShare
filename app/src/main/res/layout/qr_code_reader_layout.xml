@@ -7,9 +7,8 @@
     <com.apps.xtrange.easyshare.vision.ui.camera.CameraSourcePreview
         android:id="@+id/preview"
         android:layout_margin="@dimen/activity_horizontal_margin"
-        android:layout_width="400dp"
-        android:layout_height="400dp"
-        android:layout_gravity="center_horizontal">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.apps.xtrange.easyshare.vision.ui.camera.GraphicOverlay
             android:id="@+id/faceOverlay"

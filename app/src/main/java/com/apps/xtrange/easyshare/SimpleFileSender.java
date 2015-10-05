@@ -69,6 +69,7 @@ public class SimpleFileSender extends IntentService {
             }
 
             Intent startedIntent = new Intent(Constants.BROADCAST_SERVICE_STARTED);
+            startedIntent.putExtra(EXTRA_PORT_USED, mSocketPort);
             LocalBroadcastManager.getInstance(this).sendBroadcast(startedIntent);
 
             byte[] bytes = new byte[BUFFER_SIZE];

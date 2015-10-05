@@ -1,20 +1,46 @@
-<android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/drawer_layout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-    <!-- The main content view -->
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-    <!-- The navigation drawer -->
-    <ListView
-        android:id="@+id/drawer_list"
-        android:layout_width="240dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="#111"
-        android:choiceMode="singleChoice"
-        android:divider="@android:color/transparent"
-        android:dividerHeight="0dp" />
-</android.support.v4.widget.DrawerLayout>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <Button
+        android:id="@+id/share_files_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/share_hotspot_nfc_bt"
+        android:layout_alignParentTop="true"
+        android:layout_alignRight="@+id/share_hotspot_nfc_bt"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/share_files" />
+
+    <Button
+        android:id="@+id/share_hotspot_nfc_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/share_files_bt"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/share_hotspot_nfc"/>
+
+    <Button
+        android:id="@+id/share_hotspot_wifi_bt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/share_hotspot_nfc_bt"
+        android:layout_alignRight="@+id/share_hotspot_nfc_bt"
+        android:layout_below="@+id/share_hotspot_nfc_bt"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:gravity="center"
+        android:onClick="onClick"
+        android:text="@string/share_hotspot_wifi"/>
+
+
+
+</RelativeLayout>

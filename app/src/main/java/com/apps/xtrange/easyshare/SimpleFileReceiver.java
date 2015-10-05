@@ -5,22 +5,18 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.net.Uri;
 import android.os.Environment;
-import android.os.Handler;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.NotificationCompat;
 import android.webkit.MimeTypeMap;
 
 import java.io.BufferedOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.Socket;
-import java.net.UnknownHostException;
 
 /**
  * Created by Oscar on 9/1/2015.
@@ -114,7 +110,7 @@ public class SimpleFileReceiver extends IntentService {
             if (type == null)
                 type = "*/*";
 
-            Intent resultIntent = new Intent(getApplicationContext(), MainActivity.class);
+            Intent resultIntent = new Intent(getApplicationContext(), ShareFilesActivity.class);
             resultIntent.setDataAndType(uri, type);
             resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
