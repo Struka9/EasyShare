@@ -23,7 +23,7 @@ public class SendWithNfcFragment extends Fragment {
         Fragment f = new SendWithNfcFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable(SendActivity.EXTRA_FILE_URI, fileUri);
+        args.putParcelable(Constants.EXTRA_FILE_URI, fileUri);
 
         f.setArguments(args);
         return f;
@@ -37,7 +37,7 @@ public class SendWithNfcFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mFileUri = getArguments().getParcelable(SendActivity.EXTRA_FILE_URI);
+        mFileUri = getArguments().getParcelable(Constants.EXTRA_FILE_URI);
 
         Util.LogDebug(TAG, mFileUri.toString());
 
@@ -63,12 +63,6 @@ public class SendWithNfcFragment extends Fragment {
             rootView.findViewById(R.id.no_nfc_detected_tv).setVisibility(View.GONE);
 
             mNfcAdapter.setBeamPushUrisCallback(new FileUriCallback(), getActivity());
-            /*mNfcAdapter.setOnNdefPushCompleteCallback(new NfcAdapter.OnNdefPushCompleteCallback() {
-                @Override
-                public void onNdefPushComplete(NfcEvent event) {
-                    Log.d(TAG, "Already completed(?)");
-                }
-            }, getActivity(), null);*/
         }
         return rootView;
     }

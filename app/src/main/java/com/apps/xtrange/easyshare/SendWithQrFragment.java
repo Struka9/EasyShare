@@ -32,7 +32,7 @@ public class SendWithQrFragment extends Fragment {
         Fragment f = new SendWithQrFragment();
 
         Bundle args = new Bundle();
-        args.putParcelable(SendActivity.EXTRA_FILE_URI, fileUri);
+        args.putParcelable(Constants.EXTRA_FILE_URI, fileUri);
 
         f.setArguments(args);
 
@@ -73,7 +73,7 @@ public class SendWithQrFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         Bundle args = getArguments();
-        mFileUri = args.getParcelable(SendActivity.EXTRA_FILE_URI);
+        mFileUri = args.getParcelable(Constants.EXTRA_FILE_URI);
 
         Util.LogDebug(TAG, mFileUri.toString());
     }

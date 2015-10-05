@@ -2,7 +2,6 @@ package com.apps.xtrange.easyshare;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -49,7 +48,7 @@ public class SelectFilesFragment extends Fragment implements View.OnClickListene
         if (requestCode == PICK_FILES_REQ_CODE && resultCode == Activity.RESULT_OK) {
             if (data != null) {
                 Intent intent = new Intent(getActivity(), SendActivity.class);
-                intent.putExtra(SendActivity.EXTRA_FILE_URI, data.getData());
+                intent.putExtra(Constants.EXTRA_FILE_URI, data.getData());
                 startActivity(intent);
             }
         }

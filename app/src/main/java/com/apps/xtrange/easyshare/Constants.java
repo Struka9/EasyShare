@@ -26,4 +26,5 @@ public class Constants {
     public static final String EXTRA_IP_ADDRESS = "extra-ip";
     public static final String EXTRA_FILENAME = "extra-filename";
     public static final int RC_HANDLE_GMS = 9001;
+    public static final String EXTRA_FILE_URI = "extra-file-uri";
 }

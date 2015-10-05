@@ -1,7 +1,5 @@
 package com.apps.xtrange.easyshare;
 
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,27 +7,13 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
-import android.util.SparseArray;
-import android.view.View;
-import android.webkit.MimeTypeMap;
-import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.Toast;
 
-import com.google.android.gms.vision.Frame;
-import com.google.android.gms.vision.barcode.Barcode;
-import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.WriterException;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
 import com.viewpagerindicator.TitlePageIndicator;
 
 /**
  * Created by Oscar on 9/10/2015.
  */
 public class SendActivity extends FragmentActivity  {
-    public static final String EXTRA_FILE_URI = "extra-file-uri";
     private static final String TAG = SendActivity.class.getSimpleName();
 
     private Uri mFileUri;
@@ -46,7 +30,7 @@ public class SendActivity extends FragmentActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.send_activity);
-        mFileUri = getIntent().getParcelableExtra(EXTRA_FILE_URI);
+        mFileUri = getIntent().getParcelableExtra(Constants.EXTRA_FILE_URI);
 
         mTitles = getResources().getStringArray(R.array.receiving_options);
 

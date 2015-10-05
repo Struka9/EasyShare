@@ -33,6 +33,9 @@
     <string name="generate">Generate</string>
     <string name="empty_ssid">At least enter the SSID</string>
     <string name="missing_password">Did you forget the password?</string>
+    <string name="send_through_nfc">NFC</string>
+    <string name="make_sure_devices_touch">Make sure devices are touching</string>
+    <string name="could_not_detect_barcode">Couldn\'t detect any barcode in the received file</string>
 
     <array name="share_files_activity_options">
         <item>Send</item>
