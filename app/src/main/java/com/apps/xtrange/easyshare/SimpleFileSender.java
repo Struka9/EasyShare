@@ -20,7 +20,6 @@ import java.util.Random;
  */
 public class SimpleFileSender extends IntentService {
 
-    public static final String EXTRA_URI = "extra-uri";
     public static final String EXTRA_PORT_USED = "exta-port-used";
 
     private static final String TAG = SimpleFileSender.class.getSimpleName();
@@ -48,7 +47,11 @@ public class SimpleFileSender extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        mFileUri = intent.getParcelableExtra(EXTRA_URI);
+        mFileUri = (Uri)intent.getParcelableExtra(Constants.EXTRA_FILE_URI);
+
+        if (mFileUri == null) {
+            Util.LogDebug(TAG, "Uri is null");
+        }
 
         InputStream fis = null;
         BufferedInputStream bufferedInputStream = null;
@@ -88,14 +91,15 @@ public class SimpleFileSender extends IntentService {
                     bufferedInputStream = new BufferedInputStream(fis);
 
                     int read = bufferedInputStream.read(bytes, 0, bytes.length);
-
+                    int allRead = 0;
                     while (read != -1) {
+                        allRead += read;
                         outputStream.write(bytes, 0, read);
                         read = bufferedInputStream.read(bytes, 0, bytes.length);
                     }
 
                     outputStream.flush();
-                    Util.LogDebug(TAG, "Done.");
+                    Util.LogDebug(TAG, "Sent " + allRead + " bytes");
 
                 } finally {
                     if (bufferedInputStream != null) bufferedInputStream.close();

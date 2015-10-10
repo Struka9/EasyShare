@@ -15,12 +15,12 @@ import android.view.ViewGroup;
 /**
  * Created by Oscar on 9/12/2015.
  */
-public class SendWithNfcFragment extends Fragment {
+public class SendFilesWithNfcFragment extends Fragment {
 
-    private static final String TAG = SendWithNfcFragment.class.getSimpleName();
+    private static final String TAG = SendFilesWithNfcFragment.class.getSimpleName();
 
     public static Fragment newInstance(Uri fileUri) {
-        Fragment f = new SendWithNfcFragment();
+        Fragment f = new SendFilesWithNfcFragment();
 
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_FILE_URI, fileUri);

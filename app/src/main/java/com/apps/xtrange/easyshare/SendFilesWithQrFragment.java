@@ -26,10 +26,10 @@ import com.google.zxing.qrcode.QRCodeWriter;
 /**
  * Created by Oscar on 9/12/2015.
  */
-public class SendWithQrFragment extends Fragment {
+public class SendFilesWithQrFragment extends Fragment {
 
     public static Fragment newInstance(Uri fileUri) {
-        Fragment f = new SendWithQrFragment();
+        Fragment f = new SendFilesWithQrFragment();
 
         Bundle args = new Bundle();
         args.putParcelable(Constants.EXTRA_FILE_URI, fileUri);
@@ -39,7 +39,7 @@ public class SendWithQrFragment extends Fragment {
         return f;
     }
 
-    private static final String TAG = SendWithQrFragment.class.getSimpleName();
+    private static final String TAG = SendFilesWithQrFragment.class.getSimpleName();
     private ImageView mQrCodeImage;
 
     private Uri mFileUri;
@@ -57,6 +57,11 @@ public class SendWithQrFragment extends Fragment {
         intentFilter.addAction(Constants.BROADCAST_SERVICE_STARTED);
         intentFilter.addAction(Constants.BROADCAST_SERVICE_STARTED);
 
+        Bundle args = getArguments();
+        mFileUri = args.getParcelable(Constants.EXTRA_FILE_URI);
+
+        Util.LogDebug(TAG, mFileUri.toString());
+
         LocalBroadcastManager.getInstance(activity).registerReceiver(mReceiver, intentFilter);
 
         startSendFilesServer();
@@ -66,16 +71,6 @@ public class SendWithQrFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle args = getArguments();
-        mFileUri = args.getParcelable(Constants.EXTRA_FILE_URI);
-
-        Util.LogDebug(TAG, mFileUri.toString());
     }
 
     @Nullable
@@ -93,6 +88,7 @@ public class SendWithQrFragment extends Fragment {
 
     private void startSendFilesServer() {
         Intent senderServiceIntent = new Intent(getActivity(), SimpleFileSender.class);
+        senderServiceIntent.putExtra(Constants.EXTRA_FILE_URI, mFileUri);
         getActivity().startService(senderServiceIntent);
 
     }

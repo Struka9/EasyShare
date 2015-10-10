@@ -1,15 +1,10 @@
 package com.apps.xtrange.easyshare;
 
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.media.MediaScannerConnection;
-import android.net.Uri;
 import android.nfc.NfcAdapter;
 import android.os.Bundle;
-import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +20,6 @@ import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 
@@ -39,7 +30,6 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
 
     private static final String TAG = HotspotQrGenFragment.class.getSimpleName();
     private Button mGenerateBt;
-    private Button mShareThroughNfc;
     private EditText mSsidEt;
     private EditText mPasswordEt;
     private Spinner mSecurityTypeSpinner;
@@ -61,9 +51,6 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
 
         mGenerateBt = (Button)layout.findViewById(R.id.generate_qr_bt);
         mGenerateBt.setOnClickListener(this);
-
-        mShareThroughNfc = (Button)layout.findViewById(R.id.send_through_nfc);
-        mShareThroughNfc.setOnClickListener(this);
 
         mQrCodeImage = (ImageView)layout.findViewById(R.id.hotspot_share_qr_img);
         mSsidEt = (EditText)layout.findViewById(R.id.ssid_et);
@@ -119,19 +106,8 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
 
                 try {
                     generateQrImage(ssdid, encryption, password);
-                    mShareThroughNfc.setEnabled(true);
                 } catch (UnsupportedEncodingException e) {
                     Util.LogError(TAG, e.getMessage());
-                }
-
-                break;
-
-            case R.id.send_through_nfc:
-                Uri bitmapFileUri = saveQrCodeToExternalStorage();
-
-                if (bitmapFileUri != null) {
-                    mNfcAdapter.setBeamPushUris(new Uri[]{bitmapFileUri}, getActivity());
-                    Toast.makeText(getActivity(), R.string.make_sure_devices_touch, Toast.LENGTH_LONG).show();
                 }
 
                 break;
@@ -156,38 +132,6 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
                 mQrCodeImage.setImageBitmap(mQrCodeBitmap);
         } catch (WriterException e) {
             e.printStackTrace();
-        }
-    }
-
-    private Uri saveQrCodeToExternalStorage() {
-        File sdcard = Environment.getExternalStorageDirectory();
-        FileOutputStream out = null;
-        File check = new File(sdcard, "/easyshare/");
-        if (!(check.exists())) {
-            boolean resu = check.mkdir();
-            if(!resu){return null;}
-        }
-
-        try {
-            File myFile = new File(sdcard, "/easyshare/" + mSsidEt.getText().toString() + ".png");
-            out = new FileOutputStream(myFile);
-            boolean success = mQrCodeBitmap.compress(Bitmap.CompressFormat.PNG, 100, out);
-            if (success) {
-                myFile.setReadable(true, false);
-                return Uri.fromFile(myFile);
-            } else {
-                Toast.makeText(getActivity(), getString(R.string.error_transferring), Toast.LENGTH_LONG).show();
-                return null;
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            return null;
-        } finally {
-            if (out != null) try {
-                out.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
         }
     }
 }

@@ -36,6 +36,7 @@
     <string name="send_through_nfc">NFC</string>
     <string name="make_sure_devices_touch">Make sure devices are touching</string>
     <string name="could_not_detect_barcode">Couldn\'t detect any barcode in the received file</string>
+    <string name="enable_hotspot">Enable Hotspot</string>
 
     <array name="share_files_activity_options">
         <item>Send</item>

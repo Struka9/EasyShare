@@ -39,8 +39,8 @@ public class SendActivity extends FragmentActivity  {
             finish();
         }
 
-        mSendWithQrFragment = SendWithQrFragment.newInstance(mFileUri);
-        mSendWithNfcFragment = SendWithNfcFragment.newInstance(mFileUri);
+        mSendWithQrFragment = SendFilesWithQrFragment.newInstance(mFileUri);
+        mSendWithNfcFragment = SendFilesWithNfcFragment.newInstance(mFileUri);
 
         mSendMethodsPager = (ViewPager)findViewById(R.id.send_methods_pager);
         mSendMethodsPager.setAdapter(new FragmentPagerAdapter(getSupportFragmentManager()) {
