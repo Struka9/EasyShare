@@ -21,6 +21,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
 /**
@@ -37,9 +38,16 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
 
     private final WifiManager mWifiManager;
 
-    public WifiConfigManager(WifiManager wifiManager, OnNetworkUpdateListener listener) {
+    private boolean mIsHotspot;
+
+    public WifiConfigManager(WifiManager wifiManager, boolean isHotspot, OnNetworkUpdateListener listener) {
         this.mNetworkUpdatedListener = listener;
         this.mWifiManager = wifiManager;
+        this.mIsHotspot = isHotspot;
+    }
+
+    public WifiConfigManager(WifiManager wifiManager, OnNetworkUpdateListener listener) {
+        this(wifiManager, false, listener);
     }
 
     @Override
@@ -52,7 +60,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
     @Override
     protected Object doInBackground(String... args) {
         // Start WiFi, otherwise nothing will work
-        if (!mWifiManager.isWifiEnabled()) {
+        if (!mWifiManager.isWifiEnabled() && !mIsHotspot) {
             Log.i(TAG, "Enabling wi-fi...");
             if (mWifiManager.setWifiEnabled(true)) {
                 Log.i(TAG, "Wi-fi enabled");
@@ -75,24 +83,56 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
                 }
                 count++;
             }
+        } else if (mWifiManager.isWifiEnabled() && mIsHotspot) {
+            mWifiManager.setWifiEnabled(false);
         }
 
         String ssid = args[0];
         String password = args[1];
         String networkTypeString = args[2];
 
+        WifiConfiguration configuration = null;
         if (networkTypeString.equals(Constants.ENCRYPTION_OPEN)) {
-            changeNetworkUnEncrypted(mWifiManager, ssid);
+            configuration = createUnencryptedConfiguration(ssid, mIsHotspot);
         } else {
             if (password != null && !password.isEmpty()) {
                 if (networkTypeString.equals(Constants.ENCRYPTION_WEP)) {
-                    changeNetworkWEP(mWifiManager, ssid, password);
+                    configuration = createWepConfiguration(ssid, password, mIsHotspot);
                 } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA)) {
-                    changeNetworkWPA(mWifiManager, ssid, password);
+                    configuration = createWpaConfiguration(ssid, password, mIsHotspot);
                 }
             }
         }
+
+        if (configuration != null) {
+
+            if (!mIsHotspot)
+                updateNetwork(mWifiManager, configuration);
+            else
+                createHotspot(mWifiManager, configuration);
+        }
         return null;
+    }
+
+    /**
+     * Creates a Wifi Hotspot for @param configuration
+     * @param wifiManager
+     * @param configuration
+     */
+    private void createHotspot(WifiManager wifiManager, WifiConfiguration configuration) {
+        try{
+            Log.d(TAG, "About to create the HotSpot");
+            Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+            boolean apstatus=(Boolean) setWifiApMethod.invoke(wifiManager, configuration, true);
+
+            /*Method isWifiApEnabledmethod = wifiManager.getClass().getMethod("isWifiApEnabled");
+            while(!(Boolean)isWifiApEnabledmethod.invoke(wifiManager)){};
+            Method getWifiApStateMethod = wifiManager.getClass().getMethod("getWifiApState");
+            int apstate=(Integer)getWifiApStateMethod.invoke(wifiManager);
+            Method getWifiApConfigurationMethod = wifiManager.getClass().getMethod("getWifiApConfiguration");*/
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -120,7 +160,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         }
     }
 
-    private static WifiConfiguration changeNetworkCommon(String ssid) {
+    private static WifiConfiguration changeNetworkCommon(String ssid, boolean isHotspot) {
         WifiConfiguration config = new WifiConfiguration();
         config.allowedAuthAlgorithms.clear();
         config.allowedGroupCiphers.clear();
@@ -128,15 +168,15 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         config.allowedPairwiseCiphers.clear();
         config.allowedProtocols.clear();
         // Android API insists that an ascii SSID must be quoted to be correctly handled.
-        config.SSID = quoteNonHex(ssid);
+        config.SSID = isHotspot ? ssid : quoteNonHex(ssid); //If it's hotspot we won't want the extra double quotes in our SSID
         //TODO:Support for hidden networks
         //config.hiddenSSID = wifiResult.isHidden();
         return config;
     }
 
     // Adding a WEP network
-    private static void changeNetworkWEP(WifiManager wifiManager, String ssid, String password) {
-        WifiConfiguration config = changeNetworkCommon(ssid);
+    private static WifiConfiguration createWepConfiguration(String ssid, String password, boolean isHotspot) {
+        WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
         config.wepKeys[0] = quoteNonHex(password, 10, 26, 58);
         config.wepTxKeyIndex = 0;
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.SHARED);
@@ -145,12 +185,12 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP40);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.WEP104);
-        updateNetwork(wifiManager, config);
+        return config;
     }
 
     // Adding a WPA or WPA2 network
-    private static void changeNetworkWPA(WifiManager wifiManager, String ssid, String password) {
-        WifiConfiguration config = changeNetworkCommon(ssid);
+    private static WifiConfiguration createWpaConfiguration(String ssid, String password, boolean isHotspot) {
+        WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
         // Hex passwords that are 64 bits long are not to be quoted.
         config.preSharedKey = quoteNonHex(password, 64);
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
@@ -162,14 +202,19 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
-        updateNetwork(wifiManager, config);
+        return config;
     }
 
     // Adding an open, unsecured network
-    private static void changeNetworkUnEncrypted(WifiManager wifiManager, String ssid) {
-        WifiConfiguration config = changeNetworkCommon(ssid);
+    private static WifiConfiguration createUnencryptedConfiguration(String ssid, boolean isHotspot) {
+        WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
+
+        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+        config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+        config.allowedProtocols.set(WifiConfiguration.Protocol.WPA);
+
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.NONE);
-        updateNetwork(wifiManager, config);
+        return config;
     }
 
     private static Integer findNetworkInExistingConfig(WifiManager wifiManager, String ssid) {

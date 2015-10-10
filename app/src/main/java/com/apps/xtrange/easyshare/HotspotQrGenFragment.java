@@ -91,13 +91,8 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
                 String password = mPasswordEt.getText().toString();
                 int encryptionType = mSecurityTypeSpinner.getSelectedItemPosition();
                 String encryption;
-                if (encryptionType == 0) {
-                    encryption = Constants.ENCRYPTION_OPEN;
-                } else if (encryptionType == 1) {
-                    encryption = Constants.ENCRYPTION_WEP;
-                } else {
-                    encryption = Constants.ENCRYPTION_WPA;
-                }
+
+                encryption = Util.getEncryption(encryptionType);
 
                 if (encryption.compareTo(Constants.ENCRYPTION_OPEN) != 0 && password.isEmpty()) {
                     Toast.makeText(getActivity(), R.string.missing_password, Toast.LENGTH_SHORT).show();

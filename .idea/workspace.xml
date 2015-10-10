@@ -26,7 +26,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a5272f36-243b-4143-8dd1-407d9d377e87" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotNfcShareActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotNfcShareActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Util.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Util.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml" afterPath="$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="EasyShare.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -56,11 +63,21 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <file leaf-file-name="HotspotQrGenFragment.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="48" column="47" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+              <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="73" selection-end-column="11" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Util.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Util.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="151" column="18" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -70,9 +87,33 @@
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotNfcShareActivity.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0">
-              <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+              <caret line="71" column="37" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2204#2770#0" expanded="true" />
+                <element signature="e#2769#2770#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="27" column="86" selection-start-line="27" selection-start-column="86" selection-end-line="27" selection-end-column="86" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AndroidManifest.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0">
+              <caret line="13" column="77" selection-start-line="13" selection-start-column="77" selection-end-line="13" selection-end-column="77" />
+              <folding>
+                <element signature="e#1676#1694#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -81,9 +122,11 @@
       <file leaf-file-name="WifiConfigManager.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.07197943">
-              <caret line="122" column="37" selection-start-line="122" selection-start-column="37" selection-end-line="122" selection-end-column="37" />
-              <folding />
+            <state vertical-scroll-proportion="0.49267644">
+              <caret line="101" column="85" selection-start-line="101" selection-start-column="85" selection-end-line="101" selection-end-column="85" />
+              <folding>
+                <element signature="e#0#11377#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -91,29 +134,9 @@
       <file leaf-file-name="send_with_nfc_layout.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/send_with_nfc_layout.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.2413793">
+            <state vertical-scroll-proportion="-3.6206896">
               <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
               <folding />
-            </state>
-          </provider>
-          <provider editor-type-id="android-designer">
-            <state />
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="hotspot_share_nfc_layout.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.2413793">
-              <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-              <folding>
-                <element signature="e#439#472#0" expanded="true" />
-                <element signature="e#494#508#0" expanded="true" />
-                <element signature="e#762#795#0" expanded="true" />
-                <element signature="e#817#835#0" expanded="true" />
-                <element signature="e#1099#1132#0" expanded="true" />
-                <element signature="e#1471#1495#0" expanded="true" />
-              </folding>
             </state>
           </provider>
           <provider editor-type-id="android-designer">
@@ -1880,26 +1903,27 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/GenerateHotspotQrFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/ShareFilesActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/arrays.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SendWithQrFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/ShareHotspotWifiQrActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/qr_code_reader_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SendWithNfcFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Constants.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/NfcHotspotReceiver.java" />
-        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/hotspot_qr_gen_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/send_with_nfc_layout.xml" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SendFilesWithQrFragment.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/SimpleFileSender.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrScanFragment.java" />
-        <option value="$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/values/strings.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Util.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotNfcShareActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java" />
       </list>
     </option>
   </component>
@@ -2099,7 +2123,7 @@
     <property name="recentsLimit" value="5" />
     <property name="OverrideImplement.combined" value="false" />
     <property name="OverrideImplement.overriding.sorted" value="false" />
-    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="CB51283JB8" />
+    <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_SERIALS" value="01cbe0b5cc178260" />
     <property name="ANDROID_EXTENDED_DEVICE_CHOOSER_AVD" value="Nexus_5_API_23_x86" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
@@ -2319,7 +2343,7 @@
       <window_info id="Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3297568" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Android Model" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3823954" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.382134" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -2392,13 +2416,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/QrReaderFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="41" column="13" selection-start-line="41" selection-start-column="13" selection-end-line="41" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2461,9 +2478,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
           <folding>
-            <element signature="e#1476#1494#0" expanded="true" />
-            <element signature="e#1639#1672#0" expanded="true" />
-            <element signature="e#2000#2033#0" expanded="true" />
+            <element signature="e#1476#1494#0" expanded="false" />
+            <element signature="e#1639#1672#0" expanded="false" />
+            <element signature="e#2000#2033#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2540,9 +2557,9 @@
         <state vertical-scroll-proportion="0.0">
           <caret line="39" column="24" selection-start-line="39" selection-start-column="24" selection-end-line="39" selection-end-column="24" />
           <folding>
-            <element signature="e#1476#1494#0" expanded="true" />
-            <element signature="e#1639#1672#0" expanded="true" />
-            <element signature="e#2000#2033#0" expanded="true" />
+            <element signature="e#1476#1494#0" expanded="false" />
+            <element signature="e#1639#1672#0" expanded="false" />
+            <element signature="e#2000#2033#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -2630,13 +2647,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="30" column="89" selection-start-line="30" selection-start-column="89" selection-end-line="30" selection-end-column="89" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -2697,16 +2707,6 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="61" column="9" selection-start-line="61" selection-start-column="9" selection-end-line="61" selection-end-column="9" />
-          <folding>
-            <element signature="imports" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/CameraPreview.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.2625">
@@ -2752,25 +2752,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrScanFragment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2706767">
-          <caret line="83" column="6" selection-start-line="83" selection-start-column="6" selection-end-line="83" selection-end-column="6" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/send_with_nfc_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.2413793">
-          <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
-          <folding />
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/hotspot_qr_gen_layout.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.14150943">
@@ -2798,24 +2779,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.2413793">
-          <caret line="14" column="37" selection-start-line="14" selection-start-column="37" selection-end-line="14" selection-end-column="37" />
-          <folding>
-            <element signature="e#439#472#0" expanded="true" />
-            <element signature="e#494#508#0" expanded="true" />
-            <element signature="e#762#795#0" expanded="true" />
-            <element signature="e#817#835#0" expanded="true" />
-            <element signature="e#1099#1132#0" expanded="true" />
-            <element signature="e#1471#1495#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-      <provider editor-type-id="android-designer">
-        <state />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/ShareHotspotWifiQrActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.120300755">
@@ -2832,10 +2795,55 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/hotspot_share_nfc_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6408545">
+          <caret line="32" column="37" selection-start-line="32" selection-start-column="37" selection-end-line="32" selection-end-column="37" />
+          <folding>
+            <element signature="e#439#472#0" expanded="true" />
+            <element signature="e#494#508#0" expanded="true" />
+            <element signature="e#762#795#0" expanded="true" />
+            <element signature="e#817#835#0" expanded="true" />
+            <element signature="e#1099#1132#0" expanded="true" />
+            <element signature="e#1469#1493#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/res/layout/send_with_nfc_layout.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.6206896">
+          <caret line="7" column="65" selection-start-line="7" selection-start-column="65" selection-end-line="7" selection-end-column="65" />
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="android-designer">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/Util.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="48" column="47" selection-start-line="48" selection-start-column="47" selection-end-line="48" selection-end-column="47" />
+          <caret line="151" column="18" selection-start-line="151" selection-start-column="18" selection-end-line="151" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="27" column="86" selection-start-line="27" selection-start-column="86" selection-end-line="27" selection-end-column="86" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrGenFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="58" column="8" selection-start-line="58" selection-start-column="8" selection-end-line="73" selection-end-column="11" />
           <folding />
         </state>
       </provider>
@@ -2843,18 +2851,43 @@
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotNfcShareActivity.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="15" column="56" selection-start-line="15" selection-start-column="56" selection-end-line="15" selection-end-column="56" />
+          <caret line="71" column="37" selection-start-line="71" selection-start-column="37" selection-end-line="71" selection-end-column="37" />
           <folding>
             <element signature="imports" expanded="true" />
+            <element signature="e#2204#2770#0" expanded="true" />
+            <element signature="e#2769#2770#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/HotspotQrScanFragment.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.3404255">
+          <caret line="73" column="24" selection-start-line="73" selection-start-column="24" selection-end-line="73" selection-end-column="117" />
+          <folding>
+            <element signature="e#1782#3408#0" expanded="true" />
+            <element signature="e#3407#3408#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="13" column="77" selection-start-line="13" selection-start-column="77" selection-end-line="13" selection-end-column="77" />
+          <folding>
+            <element signature="e#1676#1694#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/apps/xtrange/easyshare/WifiConfigManager.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07197943">
-          <caret line="122" column="37" selection-start-line="122" selection-start-column="37" selection-end-line="122" selection-end-column="37" />
-          <folding />
+        <state vertical-scroll-proportion="0.49267644">
+          <caret line="101" column="85" selection-start-line="101" selection-start-column="85" selection-end-line="101" selection-end-column="85" />
+          <folding>
+            <element signature="e#0#11377#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

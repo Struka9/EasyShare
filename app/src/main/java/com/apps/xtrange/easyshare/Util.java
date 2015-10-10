@@ -142,4 +142,14 @@ public class Util {
             return NfcAdapter.getDefaultAdapter(context);
         }
     }
+
+    public static String getEncryption(int encryptionType) {
+        if (encryptionType == 0) {
+            return Constants.ENCRYPTION_OPEN;
+        } else if (encryptionType == 1) {
+            return Constants.ENCRYPTION_WEP;
+        } else {
+            return Constants.ENCRYPTION_WPA;
+        }
+    }
 }

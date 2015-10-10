@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivityIntent = new Intent(this, ShareFilesActivity.class);
                 break;
             case R.id.share_hotspot_nfc_bt:
-                //startActivityIntent = new Intent(this, )
+                startActivityIntent = new Intent(this, HotspotNfcShareActivity.class);
                 break;
             case R.id.share_hotspot_wifi_bt:
                 startActivityIntent = new Intent(this, ShareHotspotWifiQrActivity.class);
