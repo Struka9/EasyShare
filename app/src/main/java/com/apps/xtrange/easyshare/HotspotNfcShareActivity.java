@@ -13,7 +13,7 @@ public class HotspotNfcShareActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.send_with_nfc_layout);
+        setContentView(R.layout.hotspot_share_nfc_layout);
 
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
     }
