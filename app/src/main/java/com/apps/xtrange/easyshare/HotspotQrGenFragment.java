@@ -110,10 +110,7 @@ public class HotspotQrGenFragment extends Fragment implements View.OnClickListen
     }
 
     private void generateQrImage(String ssid, String encryption, String password) throws UnsupportedEncodingException {
-        String barcodeContents = URLEncoder.encode(ssid, "utf-8") + ":" +
-                encryption + ":" +
-                URLEncoder.encode(password, "utf-8") + ":" +
-                String.valueOf(Constants.MAGIC_NUMBER);
+        String barcodeContents = Util.generateCodeForShareHotspot(ssid, password, encryption);
 
         QRCodeWriter writer = new QRCodeWriter();
         try {

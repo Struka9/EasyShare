@@ -18,8 +18,10 @@ import com.google.zxing.common.BitMatrix;
 
 import org.apache.http.conn.util.InetAddressUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
+import java.net.URLEncoder;
 import java.util.Collections;
 import java.util.List;
 
@@ -151,5 +153,12 @@ public class Util {
         } else {
             return Constants.ENCRYPTION_WPA;
         }
+    }
+
+    public static String generateCodeForShareHotspot(String ssid, String password, String encryption) throws UnsupportedEncodingException {
+        return URLEncoder.encode(ssid, "utf-8") + ":" +
+                encryption + ":" +
+                URLEncoder.encode(password, "utf-8") + ":" +
+                String.valueOf(Constants.MAGIC_NUMBER);
     }
 }

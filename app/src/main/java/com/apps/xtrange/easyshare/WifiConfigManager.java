@@ -21,6 +21,7 @@ import android.net.wifi.WifiManager;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.regex.Pattern;
 
@@ -38,12 +39,12 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
 
     private final WifiManager mWifiManager;
 
-    private boolean mIsHotspot;
+    private boolean mIsCreatingHotspot;
 
-    public WifiConfigManager(WifiManager wifiManager, boolean isHotspot, OnNetworkUpdateListener listener) {
+    public WifiConfigManager(WifiManager wifiManager, boolean creatingHotspot, OnNetworkUpdateListener listener) {
         this.mNetworkUpdatedListener = listener;
         this.mWifiManager = wifiManager;
-        this.mIsHotspot = isHotspot;
+        this.mIsCreatingHotspot = creatingHotspot;
     }
 
     public WifiConfigManager(WifiManager wifiManager, OnNetworkUpdateListener listener) {
@@ -60,7 +61,39 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
     @Override
     protected Object doInBackground(String... args) {
         // Start WiFi, otherwise nothing will work
-        if (!mWifiManager.isWifiEnabled() && !mIsHotspot) {
+        if (isApEnabled(mWifiManager) && !mIsCreatingHotspot) {
+            Method setWifiApMethod = null;
+            try {
+                setWifiApMethod = mWifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
+
+                Method isHotspotEnabled = mWifiManager.getClass().getMethod("isWifiApEnabled");
+                setWifiApMethod.invoke(mWifiManager, null, false);
+                int count = 0;
+                while ((Boolean)isHotspotEnabled.invoke(mWifiManager)) {
+                    if (count >= 10) {
+                        Log.i(TAG, "Took too long to disable hotspot, quitting");
+                        return null;
+                    }
+                    Log.i(TAG, "Still waiting for hotspot to disable...");
+                    try {
+                        Thread.sleep(1000L);
+                    } catch (InterruptedException ie) {
+                        // continue
+                    }
+                    count++;
+                }
+
+            } catch (NoSuchMethodException e) {
+                e.printStackTrace();
+            } catch (InvocationTargetException e) {
+                e.printStackTrace();
+            } catch (IllegalAccessException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        if (!mWifiManager.isWifiEnabled() && !mIsCreatingHotspot) {
             Log.i(TAG, "Enabling wi-fi...");
             if (mWifiManager.setWifiEnabled(true)) {
                 Log.i(TAG, "Wi-fi enabled");
@@ -83,7 +116,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
                 }
                 count++;
             }
-        } else if (mWifiManager.isWifiEnabled() && mIsHotspot) {
+        } else if (mWifiManager.isWifiEnabled() && mIsCreatingHotspot) {
             mWifiManager.setWifiEnabled(false);
         }
 
@@ -93,20 +126,22 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
 
         WifiConfiguration configuration = null;
         if (networkTypeString.equals(Constants.ENCRYPTION_OPEN)) {
-            configuration = createUnencryptedConfiguration(ssid, mIsHotspot);
+            configuration = createUnencryptedConfiguration(ssid, mIsCreatingHotspot);
         } else {
             if (password != null && !password.isEmpty()) {
                 if (networkTypeString.equals(Constants.ENCRYPTION_WEP)) {
-                    configuration = createWepConfiguration(ssid, password, mIsHotspot);
-                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA)) {
-                    configuration = createWpaConfiguration(ssid, password, mIsHotspot);
+                    configuration = createWepConfiguration(ssid, password, mIsCreatingHotspot);
+                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA) && !mIsCreatingHotspot) {
+                    configuration = createWpaConfiguration(ssid, password, mIsCreatingHotspot);
+                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA) && mIsCreatingHotspot) {
+                    configuration = createWpa2Configuration(ssid, password, mIsCreatingHotspot);
                 }
             }
         }
 
         if (configuration != null) {
 
-            if (!mIsHotspot)
+            if (!mIsCreatingHotspot)
                 updateNetwork(mWifiManager, configuration);
             else
                 createHotspot(mWifiManager, configuration);
@@ -188,6 +223,25 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         return config;
     }
 
+    private static WifiConfiguration createWpa2Configuration(String ssid, String password, boolean isHotspot) {
+        WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
+        // Hex passwords that are 64 bits long are not to be quoted.
+
+        config.preSharedKey = quoteNonHex(password, 64);
+
+        //config.preSharedKey = "\"" + password + "\"";
+        config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
+        config.allowedProtocols.set(WifiConfiguration.Protocol.RSN);
+        config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
+
+        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+        config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
+
+        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
+        config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
+        return config;
+    }
+
     // Adding a WPA or WPA2 network
     private static WifiConfiguration createWpaConfiguration(String ssid, String password, boolean isHotspot) {
         WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
@@ -196,10 +250,13 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         config.allowedProtocols.set(WifiConfiguration.Protocol.WPA); // For WPA
         config.allowedProtocols.set(WifiConfiguration.Protocol.RSN); // For WPA2
+
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_PSK);
         config.allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP);
+
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.TKIP);
         config.allowedPairwiseCiphers.set(WifiConfiguration.PairwiseCipher.CCMP);
+
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
         return config;
@@ -269,6 +326,26 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
                 return true;
             }
         }
+        return false;
+    }
+
+    /**
+     * Returns true if is able to get the methods and this device's Hotspot feature is enabled or false otherwise
+     * @param wifiManager
+     * @return
+     */
+    public static boolean isApEnabled(WifiManager wifiManager) {
+        try {
+            Method isWifiApEnabledmethod = wifiManager.getClass().getMethod("isWifiApEnabled");
+            return (Boolean)isWifiApEnabledmethod.invoke(wifiManager);
+        } catch (NoSuchMethodException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+
         return false;
     }
 
