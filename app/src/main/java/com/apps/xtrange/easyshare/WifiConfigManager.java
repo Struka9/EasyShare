@@ -61,7 +61,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
     @Override
     protected Object doInBackground(String... args) {
         // Start WiFi, otherwise nothing will work
-        if (isApEnabled(mWifiManager) && !mIsCreatingHotspot) {
+        if (isApEnabled(mWifiManager)) {
             Method setWifiApMethod = null;
             try {
                 setWifiApMethod = mWifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
