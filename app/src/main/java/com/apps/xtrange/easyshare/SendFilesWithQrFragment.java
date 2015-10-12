@@ -1,13 +1,17 @@
 package com.apps.xtrange.easyshare;
 
 import android.app.Activity;
+import android.app.Service;
 import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.ServiceConnection;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.LocalBroadcastManager;
@@ -39,6 +43,9 @@ public class SendFilesWithQrFragment extends Fragment {
         return f;
     }
 
+    private boolean mBound = false;
+    private SimpleFileSender mService;
+
     private static final String TAG = SendFilesWithQrFragment.class.getSimpleName();
     private ImageView mQrCodeImage;
 
@@ -47,6 +54,21 @@ public class SendFilesWithQrFragment extends Fragment {
     private FileSenderBroadcastReceiver mReceiver = new FileSenderBroadcastReceiver();
 
     private Bitmap mQrCodeBitmap;
+
+    private ServiceConnection mConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName componentName, IBinder iBinder) {
+            SimpleFileSender.LocalBinder binder = (SimpleFileSender.LocalBinder)iBinder;
+            mService = binder.getLocalService();
+            mService.startFileSender();
+            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName componentName) {
+            mBound = false;
+        }
+    };
 
     @Override
     public void onAttach(Activity activity) {
@@ -64,13 +86,20 @@ public class SendFilesWithQrFragment extends Fragment {
 
         LocalBroadcastManager.getInstance(activity).registerReceiver(mReceiver, intentFilter);
 
-        startSendFilesServer();
+        if (!mBound)
+            startSendFilesServer();
     }
 
     @Override
     public void onDetach() {
-        super.onDetach();
         LocalBroadcastManager.getInstance(getActivity()).unregisterReceiver(mReceiver);
+
+        if (mBound) {
+            getActivity().unbindService(mConnection);
+            mBound = false;
+        }
+
+        super.onDetach();
     }
 
     @Nullable
@@ -89,7 +118,7 @@ public class SendFilesWithQrFragment extends Fragment {
     private void startSendFilesServer() {
         Intent senderServiceIntent = new Intent(getActivity(), SimpleFileSender.class);
         senderServiceIntent.putExtra(Constants.EXTRA_FILE_URI, mFileUri);
-        getActivity().startService(senderServiceIntent);
+        getActivity().bindService(senderServiceIntent, mConnection, Service.BIND_AUTO_CREATE);
 
     }
 
