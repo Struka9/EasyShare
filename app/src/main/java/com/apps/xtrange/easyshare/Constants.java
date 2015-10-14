@@ -9,7 +9,7 @@ public class Constants {
     public static final int MAGIC_NUMBER = 0x1337;
 
     public static final Pattern SHARE_FILES_PATTERN = Pattern.compile("([0-9]{1,3}\\.){3}[0-9]{1,3}:[0-9]+:" +
-            String.valueOf(MAGIC_NUMBER) + ":" + "[a-zA-Z]+");
+            String.valueOf(MAGIC_NUMBER) + ":" + "[a-zA-Z0-9]+");
 
     public static final Pattern SHARE_HOTSPOT_PATTERN = Pattern.compile("([^:]{1,32}):([a-z]+-[a-z]+):([^:]{0,32}):" +
             String.valueOf(MAGIC_NUMBER));
