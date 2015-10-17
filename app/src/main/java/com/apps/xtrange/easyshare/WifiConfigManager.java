@@ -243,7 +243,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
     private static WifiConfiguration createWpaConfiguration(String ssid, String password, boolean isHotspot) {
         WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
         // Hex passwords that are 64 bits long are not to be quoted.
-        config.preSharedKey = quoteNonHex(password, 64);
+        config.preSharedKey = isHotspot ? password : quoteNonHex(password, 64);
         config.allowedAuthAlgorithms.set(WifiConfiguration.AuthAlgorithm.OPEN);
         config.allowedProtocols.set(WifiConfiguration.Protocol.WPA); // For WPA
         config.allowedProtocols.set(WifiConfiguration.Protocol.RSN); // For WPA2
