@@ -131,10 +131,8 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
             if (password != null && !password.isEmpty()) {
                 if (networkTypeString.equals(Constants.ENCRYPTION_WEP)) {
                     configuration = createWepConfiguration(ssid, password, mIsCreatingHotspot);
-                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA) && !mIsCreatingHotspot) {
+                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA)) {
                     configuration = createWpaConfiguration(ssid, password, mIsCreatingHotspot);
-                } else if (networkTypeString.equals(Constants.ENCRYPTION_WPA) && mIsCreatingHotspot) {
-                    configuration = createWpa2Configuration(ssid, password, mIsCreatingHotspot);
                 }
             }
         }
@@ -158,13 +156,9 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         try{
             Log.d(TAG, "About to create the HotSpot");
             Method setWifiApMethod = wifiManager.getClass().getMethod("setWifiApEnabled", WifiConfiguration.class, boolean.class);
-            boolean apstatus=(Boolean) setWifiApMethod.invoke(wifiManager, configuration, true);
+            boolean apstatus= (Boolean) setWifiApMethod.invoke(wifiManager, configuration, true);
 
-            /*Method isWifiApEnabledmethod = wifiManager.getClass().getMethod("isWifiApEnabled");
-            while(!(Boolean)isWifiApEnabledmethod.invoke(wifiManager)){};
-            Method getWifiApStateMethod = wifiManager.getClass().getMethod("getWifiApState");
-            int apstate=(Integer)getWifiApStateMethod.invoke(wifiManager);
-            Method getWifiApConfigurationMethod = wifiManager.getClass().getMethod("getWifiApConfiguration");*/
+
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -178,7 +172,10 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         Integer foundNetworkID = findNetworkInExistingConfig(wifiManager, config.SSID);
         if (foundNetworkID != null) {
             Log.i(TAG, "Removing old configuration for network " + config.SSID);
-            wifiManager.removeNetwork(foundNetworkID);
+            boolean removed = wifiManager.removeNetwork(foundNetworkID);
+            if (!removed) {
+                Log.i(TAG, "Couldn't remove the old network " + config.SSID);
+            }
             wifiManager.saveConfiguration();
         }
         int networkId = wifiManager.addNetwork(config);
@@ -223,7 +220,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         return config;
     }
 
-    private static WifiConfiguration createWpa2Configuration(String ssid, String password, boolean isHotspot) {
+    /*private static WifiConfiguration createWpa2Configuration(String ssid, String password, boolean isHotspot) {
         WifiConfiguration config = changeNetworkCommon(ssid, isHotspot);
         // Hex passwords that are 64 bits long are not to be quoted.
 
@@ -240,7 +237,7 @@ public final class WifiConfigManager extends AsyncTask<String,Object,Object> {
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.CCMP);
         config.allowedGroupCiphers.set(WifiConfiguration.GroupCipher.TKIP);
         return config;
-    }
+    }*/
 
     // Adding a WPA or WPA2 network
     private static WifiConfiguration createWpaConfiguration(String ssid, String password, boolean isHotspot) {
