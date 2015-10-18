@@ -51,11 +51,13 @@
             android:name=".SendActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".ShareFilesActivity">
+            android:name=".ShareFilesActivity"
+            android:screenOrientation="portrait">
 
         </activity>
 
-        <activity android:name=".HotspotNfcShareActivity"/>
+        <activity android:name=".HotspotNfcShareActivity"
+            android:screenOrientation="portrait"/>
 
         <service android:name=".SimpleFileSender"/>
         <service android:name=".SimpleFileReceiver"/>
